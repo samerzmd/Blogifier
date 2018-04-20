@@ -51,7 +51,7 @@ namespace Blogifier.Core.Data.Repositories
             return field == null || field.CustomValue == null ? string.Empty : field.CustomValue;
         }
 
-        public Task SetCustomField(CustomType customType, int parentId, string key, string value)
+        public int SetCustomField(CustomType customType, int parentId, string key, string value)
         {
             var dbField = _db.CustomFields
                 .Where(f => f.CustomType == customType && f.ParentId == parentId && f.CustomKey == key)
@@ -65,16 +65,16 @@ namespace Blogifier.Core.Data.Repositories
             else
             {
                 _db.CustomFields.Add(new CustomField
-                {
-                    CustomKey = key,
-                    CustomValue = value,
-                    Title = key,
-                    CustomType = customType,
-                    ParentId = parentId,
-                    LastUpdated = SystemClock.Now()
-                });
+                                         {
+                                             CustomKey = key,
+                                             CustomValue = value,
+                                             Title = key,
+                                             CustomType = customType,
+                                             ParentId = parentId,
+                                             LastUpdated = SystemClock.Now()
+                                         });
             }
-            return _db.SaveChangesAsync();
+            return _db.SaveChanges();
         }
 
         Dictionary<string, string> Load(IQueryable<CustomField> dbFields)

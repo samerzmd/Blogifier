@@ -24,7 +24,7 @@ namespace Blogifier.Core.Controllers.Api
         public async Task SetCustomField([FromBody]CustomFieldItem item)
         {
             var profile = GetProfile();
-            await _db.CustomFields.SetCustomField(CustomType.Profile, profile.Id, item.CustomKey, item.CustomValue);
+            _db.CustomFields.SetCustomField(CustomType.Profile, profile.Id, item.CustomKey, item.CustomValue);
         }
 
         Profile GetProfile()
